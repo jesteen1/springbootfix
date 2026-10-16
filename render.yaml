@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: kumar-electrical-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kumar-electrical-db
+          property: connectionString
+      - key: DB_USER
+        fromDatabase:
+          name: kumar-electrical-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: kumar-electrical-db
+          property: password
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+      - key: ADMIN_USERNAME
+        value: ADMIN
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: EMPLOYEE_DEFAULT_PASSWORD
+        value: emp123
+
+databases:
+  - name: kumar-electrical-db
+    databaseName: kumar_electrical
+    user: kumar_admin
+    plan: free
+    region: singapore
